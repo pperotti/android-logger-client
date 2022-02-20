@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Logger Client Library"
+rootProject.name = "Library - Log Provider Helper"
 include ':app'
 include ':app:client'

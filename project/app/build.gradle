@@ -4,20 +4,12 @@ plugins {
     id 'maven-publish'
 }
 
-def getVersionName = { ->
-    return "0.0.2" // Replace with version Name
-}
-
-def getArtificatId = { ->
-    return "android-logger-client" // Replace with library name ID
-}
-
 publishing {
     publications {
         maven(MavenPublication) {
             groupId "com.pabloperotti.android.tools.log.client"
-            artifactId getArtificatId()
-            version getVersionName()
+            artifactId "android-logger-client"
+            version "0.0.3"
             artifact "$projectDir/client/build/outputs/aar/client-release.aar"
 
             pom {
@@ -38,14 +30,11 @@ publishing {
     }
     repositories {
         maven {
-            def propsFile = rootProject.file('github.properties')
-            def props = new Properties()
-            props.load(new FileInputStream(propsFile))
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/pperotti/android-logger-client")
             credentials {
-                username props['username']
-                password props['token']
+                username = project.findProperty("github_username") ?: System.getenv("USERNAME")
+                password = project.findProperty("github_publish_token") ?: System.getenv("TOKEN")
             }
         }
     }
@@ -59,7 +48,7 @@ android {
         minSdk 27
         targetSdk 31
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
